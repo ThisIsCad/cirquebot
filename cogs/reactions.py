@@ -105,37 +105,37 @@ class Reactions(commands.Cog):
         KEY_EMOJI: '👍',
         KEY_TITLE: 'Reactions',
         KEY_DESCRIPTION: 'Manages the connections between message reactions and role assignments.',
-        KEY_COMMAND: '!cb reactions',
+        KEY_COMMAND: '!reactions',
         KEY_SUBCOMMANDS: [
             {
                 KEY_EMOJI: '🧾',
                 KEY_TITLE: 'list',
                 KEY_DESCRIPTION: 'Lists all of the messages on this server that have reaction/role configurations.',
-                KEY_EXAMPLE: '!cb ra list'
+                KEY_EXAMPLE: '!ra list'
             },
             {
                 KEY_EMOJI: '🛠️',
                 KEY_TITLE: 'config [message link]',
                 KEY_DESCRIPTION: 'Starts a session to edit the reaction/role configuration for the linked message.',
-                KEY_EXAMPLE: '!cb ra config https://discord.com/URL'
+                KEY_EXAMPLE: '!ra config https://discord.com/URL'
             },
             {
                 KEY_EMOJI: '📨',
                 KEY_TITLE: 'copy [source message link] [destination message link]',
                 KEY_DESCRIPTION: 'Copies the reaction/role config from the source message to the destination message.',
-                KEY_EXAMPLE: '!cb ra copy https://discord.com/SRC https://discord.com/DST'
+                KEY_EXAMPLE: '!ra copy https://discord.com/SRC https://discord.com/DST'
             },
             {
                 KEY_EMOJI: '🧼',
                 KEY_TITLE: 'reset [message link]',
                 KEY_DESCRIPTION: 'Wipes the reaction/role configuration for the linked message.',
-                KEY_EXAMPLE: '!cb ra reset https://discord.com/URL'
+                KEY_EXAMPLE: '!ra reset https://discord.com/URL'
             },
             {
                 KEY_EMOJI: '🧹',
                 KEY_TITLE: 'cleanup [message link]',
                 KEY_DESCRIPTION: 'Removes obsolete and/or mismatched reactions from the linked message.',
-                KEY_EXAMPLE: '!cb ra cleanup https://discord.com/URL'
+                KEY_EXAMPLE: '!ra cleanup https://discord.com/URL'
             }
         ]
     }
@@ -536,10 +536,7 @@ class Reactions(commands.Cog):
     @staticmethod
     async def validate_message(ctx, message_link, bot_member):
         message = await fetch_message(ctx, message_link)
-        if not message:
-            await ctx.send(embed=create_basic_embed('I couldn\'t find that message!', EMOJI_ERROR))
-        elif await Reactions.validate_channel(ctx, message.channel, bot_member):
-            return message
+        return message
 
     @staticmethod
     async def validate_channel(ctx, channel, bot_member):

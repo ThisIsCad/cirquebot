@@ -1,7 +1,7 @@
 import json
 import os.path
 
-DEFAULT_PREFIX = '!cb '
+DEFAULT_PREFIX = '!'
 PREFIXES_PATH = 'data/prefixes.json'
 
 

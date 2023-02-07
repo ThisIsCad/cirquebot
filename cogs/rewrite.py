@@ -9,31 +9,30 @@ TEXT_FORMAT_TEMPLATE = 'Copy and paste the following template:\n```json\n{0}\n``
 TEXT_ONLY_HUMANS = 'I can only post messages that were written by humans!'
 TEXT_TOO_LONG = 'Discord only allows me to post messages up to 2000 characters long!'
 
-
 class Rewrite(commands.Cog):
     help = {
         KEY_EMOJI: '📝',
         KEY_TITLE: 'Rewrite',
         KEY_DESCRIPTION: 'Facilitates collaborative editing of Discord posts.',
-        KEY_COMMAND: '!cb rewrite',
+        KEY_COMMAND: '!rewrite',
         KEY_SUBCOMMANDS: [
             {
                 KEY_EMOJI: '📨',
                 KEY_TITLE: 'post [message link] [channel]',
                 KEY_DESCRIPTION: 'Posts the content of the linked message to the specified channel.',
-                KEY_EXAMPLE: '!cb rw post https://discord.com/URL #announcements'
+                KEY_EXAMPLE: '!rw post https://discord.com/URL #announcements'
             },
             {
                 KEY_EMOJI: '📝',
                 KEY_TITLE: 'edit [message link]',
                 KEY_DESCRIPTION: 'Provides a template for editing the specified message.',
-                KEY_EXAMPLE: '!cb rw edit https://discord.com/URL'
+                KEY_EXAMPLE: '!rw edit https://discord.com/URL'
             },
             {
                 KEY_EMOJI: '♻',
                 KEY_TITLE: 'replace [old message link] [new message link]',
                 KEY_DESCRIPTION: 'Replaces the content of the old message with the content of the new message.',
-                KEY_EXAMPLE: '!cb rw replace https://discord.com/OLD https://discord.com/NEW'
+                KEY_EXAMPLE: '!rw replace https://discord.com/OLD https://discord.com/NEW'
             }
         ]
     }

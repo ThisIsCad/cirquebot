@@ -16,7 +16,6 @@ intents.guild_typing = True
 
 bot = commands.Bot(command_prefix=get_prefix, help_command=None, intents=intents)
 
-
 def initialize_bot(config):
     # Extensions that should be loaded for all bot configurations.
     bot.load_extension('cogs.help')
@@ -30,24 +29,17 @@ def initialize_bot(config):
     bot.load_extension('cogs.abs_game')
     bot.load_extension('cogs.audio_player')
     bot.load_extension('cogs.easter_eggs')
-    bot.load_extension('cogs.greetings')
     bot.load_extension('cogs.rewrite')
     bot.load_extension('cogs.sniper')
 
     if config == CONFIG_PROD:
         return BOT_TOKEN_PROD
 
-    # Extensions that should only be loaded for DEV configuration.
-    bot.load_extension('cogs.nicknames')
-    bot.load_extension('cogs.permissions')
-
     return BOT_TOKEN_DEV
-
 
 @bot.event
 async def on_ready():
     print(f'Successfully logged in as: {bot.user}')
-    await bot.change_presence(activity=Game(name=BOT_STATUS))
 
 @bot.event
 async def on_command_error(ctx, error):

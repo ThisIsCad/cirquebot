@@ -1,18 +1,18 @@
-CirqueBot
-=========
+DinoBot (Legacy)
+================
 
 Bot Prefix
 ----------
 
-The prefix used in the Dev & Clowns server is "!". The default prefix when you run the bot is `!cb ` to avoid conflicts with other bots.
+The default prefix when you run the bot is `!`. It can be changed to avoid conflicts with other bots.
 
 To change the prefix, use the following command:
 
 ```
-!cb pf set "!"
+!pf set "!db"
 ```
 
-Otherwise, commands like `!bonk` should be `!cb bonk` when testing.
+Otherwise, commands like `!bonk` should be `!db bonk` with a custom prefix.
 
 Creating Bot Tokens
 -------------------
@@ -20,7 +20,7 @@ Creating Bot Tokens
 To run & test locally, you will need a bot token.
 
 1. Go to https://discord.com/developers/applications/
-2. Create a new application. Name it something like `CirqueBotTest`
+2. Create a new application. Name it something like `DinobotTest`
 3. Once created, navigate to the "Bot" option in the sidebar, and click "Add Bot"
 4. Just under the Username, will be a link called "Click to Reveal Token". Click it
 5. Copy the token and put it in the blank secrets.py file
@@ -49,29 +49,29 @@ The `-v` option will mount the working directory to the container so that any ch
 **Windows:**
 
 ```
-docker build -t cirquebot .
-docker run -itv ${PWD}:/usr/src/app cirquebot # for windows
+docker build -t dinobot .
+docker run -itv ${PWD}:/usr/src/app dinobot # for windows
 ```
 
 **Cygwin:**
 
 ```
-docker build -t cirquebot .
-docker run -itv `cygpath -d $PWD`:/usr/src/app cirquebot
+docker build -t dinobot .
+docker run -itv `cygpath -d $PWD`:/usr/src/app dinobot
 ```
 
 **Linux:**
 
 ```
-docker build -t cirquebot .
-docker run -itd -v /usr/src/cirquebot/data:/usr/src/app/data -v /usr/src/cirquebot:/usr/src/app cirquebot
+docker build -t dinobot .
+docker run -itd -v /usr/src/dinobot/data:/usr/src/app/data -v /usr/src/dinobot:/usr/src/app dinobot
 ```
 
 You should see output like this:
 
 ```
 [Configuration: PROD] Logging in...
-Successfully logged in as: CirqueBotTest#1280
+Successfully logged in as: DinobotTest#1280
 ```
 
 Uploading Docker Image
@@ -80,8 +80,8 @@ Uploading Docker Image
 Save the image:
 
 ```
-docker save -o cirquebot.tar docker.io/library/cirquebot
-scp cirquebot.tar bot-host
+docker save -o dinobot.tar docker.io/library/dinobot
+scp dinobot.tar bot-host
 ssh bot-host
-docker load cirquebot.tar
+docker load dinobot.tar
 ```

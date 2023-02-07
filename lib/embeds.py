@@ -12,7 +12,7 @@ EMOJI_WARNING = '❔'
 EMOJI_INFO = 'ℹ'
 
 FORMAT_EMOJI_TEXT = '{0} \u200B \u200B {1}'  # args: emoji, text
-FORMAT_HELP_TITLE = 'CirqueBot Help: \u200B \u200B `{0}`'  # args: command
+FORMAT_HELP_TITLE = 'Dinobot Help: \u200B \u200B `{0}`'  # args: command
 FORMAT_COMMAND_TITLE = '\n** **\n{0} \u200B \u200B {1}'  # args: emoji, title
 
 TEXT_ERROR_LABEL = '**Error:** \u200B '

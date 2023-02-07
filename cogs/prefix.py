@@ -14,25 +14,25 @@ class Prefix(commands.Cog):
         KEY_EMOJI: '🛠️',
         KEY_TITLE: 'Prefix',
         KEY_DESCRIPTION: 'Allows customization of the prefix used for this bot\'s commands.',
-        KEY_COMMAND: '!cb prefix',
+        KEY_COMMAND: '!prefix',
         KEY_SUBCOMMANDS: [
             {
                 KEY_EMOJI: '🔍',
                 KEY_TITLE: 'show',
                 KEY_DESCRIPTION: 'Displays the prefix currently used for commands in this server.',
-                KEY_EXAMPLE: '!cb pf show'
+                KEY_EXAMPLE: '!pf show'
             },
             {
                 KEY_EMOJI: '🛠️',
                 KEY_TITLE: 'set [prefix]',
                 KEY_DESCRIPTION: 'Changes the prefix used for commands in this server to the given string.',
-                KEY_EXAMPLE: '!cb pf set "!"'
+                KEY_EXAMPLE: '!pf set "!"'
             },
             {
                 KEY_EMOJI: '🔄',
                 KEY_TITLE: 'reset',
                 KEY_DESCRIPTION: 'Resets the prefix used for commands in this server to the default `!cb\u200B `.',
-                KEY_EXAMPLE: '!cb pf reset'
+                KEY_EXAMPLE: '!pf reset'
             }
         ]
     }

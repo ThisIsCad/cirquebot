@@ -16,22 +16,13 @@ FILENAME_PUSHEEN = 'assets/pusheen.gif'
 FILENAME_SUNDER = 'assets/sunder.png'
 FILENAME_SPANK_1 = 'assets/spank1.png'
 FILENAME_SPANK_2 = 'assets/spank2.png'
-FILENAME_GANGBANG = 'assets/gangbang.png'
 FILENAME_WATCH = 'assets/watch.jpg'
 
 REGEX_ESNIPE = compile(r'^\s*ple*a*(s|z)+e?\s*e(dit)?-?(sn|ns)e?(ip|pi)e?\\?\s*$', IGNORECASE)
 REGEX_RSNIPE = compile(r'^\s*ple*a*(s|z)+e?\s*r(eaction)?-?(sn|ns)e?(ip|pi)e?\\?\s*$', IGNORECASE)
 REGEX_HELP = compile(r'^\s*\!cb\s*h[ea]lp\s*$', IGNORECASE)
-REGEX_QWEPHESS = compile(r'^(.*?(([^a-zA-Z0-9_:]|^)kephess\b)[^$]*)$', IGNORECASE)
 REGEX_SNIPE = compile(r'^\s*ple*a*(s|z)+e?\s*(sn|ns)e?(ip|pi)e?\\?\s*$', IGNORECASE)
 REGEX_SPANK_EMOJI = compile(r'^\s*(<:spank[a-z]*:740455662856831007>\s*)+$', IGNORECASE)
-
-TEXT_DM_HELP = 'Sorry, my \u200b `help` \u200b command is disabled in DMs!'
-TEXT_DM_CLOWNCIL = 'Hello, friend! \u200b My name is CirqueBot.\nSorry, but I don\'t want to talk about that.\nBut thank ' \
-                   'you for sending me a message!\nI hope you have an eventful day! \u200b <:hypersLove:740457258395107380>'
-TEXT_DM_RESPONSE = 'Hello, friend! \u200b My name is CirqueBot.\nI don\'t understand what you\'re saying.\nBut thank ' \
-                   'you for sending me a message!\nI hope you have a nice day! \u200b <:hypersLove:740457258395107380>'
-
 
 class EasterEggs(commands.Cog):
 
@@ -51,10 +42,6 @@ class EasterEggs(commands.Cog):
         await EasterEggs.handle_spank_command(ctx.message)
 
     @commands.command()
-    async def gangbang(self, ctx):
-        await EasterEggs.handle_gangbang_command(ctx.message)
-
-    @commands.command()
     async def watch(self, ctx):
         await EasterEggs.handle_watch_command(ctx.message)
 
@@ -62,8 +49,6 @@ class EasterEggs(commands.Cog):
     async def on_message(self, message):
         if message.author.id == self.bot.user.id:
             return
-        elif not message.guild:
-            await EasterEggs.respond_to_dm(message, get_prefix(self.bot, message))
         elif REGEX_ESNIPE.match(message.content):
             await self.bot.get_cog('Sniper').editsnipe(msg=message)
         elif REGEX_RSNIPE.match(message.content):
@@ -71,51 +56,10 @@ class EasterEggs(commands.Cog):
         elif REGEX_HELP.match(message.content):
             if get_prefix(self.bot, message) != DEFAULT_PREFIX:
                 await Help.show_help(self.bot, message)
-        elif REGEX_QWEPHESS.match(message.content):
-            await EasterEggs.fix_qwephess(message)
         elif REGEX_SNIPE.match(message.content):
             await self.bot.get_cog('Sniper').snipe(msg=message)
         elif REGEX_SPANK_EMOJI.match(message.content):
             await EasterEggs.handle_spank_command(message, bot=self.bot)
-
-    @staticmethod
-    async def respond_to_dm(message, prefix):
-        log(f'Received a DM from {message.author.name}#{message.author.discriminator}:')
-        for line in message.content.split('\n'):
-            log(line, indent=1)
-
-        if REGEX_HELP.match(message.content):
-            await message.channel.send(embed=create_basic_embed(TEXT_DM_HELP, EMOJI_ERROR))
-        elif "shadow clowncil" in message.content:
-            embed = create_basic_embed(TEXT_DM_CLOWNCIL)
-            file = File(FILENAME_PUSHEEN, 'image.gif')
-            embed.set_image(url='attachment://image.gif')
-            await message.channel.send(embed=embed, file=file)
-        elif message.content.startswith(prefix) or message.content.startswith("!"):
-            return
-        else:
-            embed = create_basic_embed(TEXT_DM_RESPONSE)
-            file = File(FILENAME_PUSHEEN, 'image.gif')
-            embed.set_image(url='attachment://image.gif')
-            await message.channel.send(embed=embed, file=file)
-
-    @staticmethod
-    async def fix_qwephess(message):
-        if not message.guild or message.guild.id != CLOWNS_GUILD_ID:
-            return
-
-        message_blocks = split("kephess", message.content, flags=IGNORECASE)
-        kephess_index = message.content.lower().find("kephess")
-        kephess_string = message.content[kephess_index:(kephess_index + len("kephess"))]
-        if kephess_string[0].isupper() and kephess_string[1].isupper():
-            qw = "QW"
-        elif kephess_string[0].isupper():
-            qw = "Qw"
-        else:
-            qw = "qw"
-        new_message = message_blocks[0] + f"~~{kephess_string}~~ {qw}{kephess_string[1:]}" + message_blocks[1]
-        embed = create_basic_embed(new_message)
-        await message.reply(embed=embed, mention_author=False)
 
     @staticmethod
     async def handle_bonk_command(message, sunder=False):
@@ -142,27 +86,6 @@ class EasterEggs(commands.Cog):
             bonk_image.save(image_bytes, 'png')
             image_bytes.seek(0)
             await message.channel.send(file=File(fp=image_bytes, filename='bonk.png'))
-
-    @staticmethod
-    async def handle_gangbang_command(message, bot=None):
-        if len(message.mentions) != 1:
-            embed = create_basic_embed('Please specify exactly one person to gangbang.', EMOJI_ERROR)
-            await message.channel.send(embed=embed)
-            return
-
-        async with message.channel.typing():
-            bonk_image = Image.open(FILENAME_GANGBANG)
-            bangee_image = await EasterEggs.get_avatar_image(message.mentions[0])
-
-            if bangee_image:
-                bonk_image = EasterEggs.process_image(
-                    bangee_image, new_size=(75, 75), apply_mask=True, bg_image=bonk_image, position=(658, 386))
-
-        with BytesIO() as image_bytes:
-            bonk_image.save(image_bytes, 'png')
-            image_bytes.seek(0)
-            await message.channel.send(file=File(fp=image_bytes, filename='bang.png'))
-
 
     @staticmethod
     async def handle_watch_command(message, bot=None):
