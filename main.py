@@ -30,7 +30,6 @@ def initialize_bot(config):
     bot.load_extension('cogs.audio_player')
     bot.load_extension('cogs.easter_eggs')
     bot.load_extension('cogs.rewrite')
-    bot.load_extension('cogs.sniper')
 
     if config == CONFIG_PROD:
         return BOT_TOKEN_PROD

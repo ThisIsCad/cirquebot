@@ -8,8 +8,6 @@ from lib.prefixes import *
 from lib.utils import log
 from re import compile, split, IGNORECASE
 
-CLOWNS_GUILD_ID = 722929163291328653
-
 FILENAME_BONK = 'assets/bonk.png'
 FILENAME_MASK = 'assets/mask.png'
 FILENAME_PUSHEEN = 'assets/pusheen.gif'
@@ -18,10 +16,7 @@ FILENAME_SPANK_1 = 'assets/spank1.png'
 FILENAME_SPANK_2 = 'assets/spank2.png'
 FILENAME_WATCH = 'assets/watch.jpg'
 
-REGEX_ESNIPE = compile(r'^\s*ple*a*(s|z)+e?\s*e(dit)?-?(sn|ns)e?(ip|pi)e?\\?\s*$', IGNORECASE)
-REGEX_RSNIPE = compile(r'^\s*ple*a*(s|z)+e?\s*r(eaction)?-?(sn|ns)e?(ip|pi)e?\\?\s*$', IGNORECASE)
 REGEX_HELP = compile(r'^\s*\!cb\s*h[ea]lp\s*$', IGNORECASE)
-REGEX_SNIPE = compile(r'^\s*ple*a*(s|z)+e?\s*(sn|ns)e?(ip|pi)e?\\?\s*$', IGNORECASE)
 REGEX_SPANK_EMOJI = compile(r'^\s*(<:spank[a-z]*:740455662856831007>\s*)+$', IGNORECASE)
 
 class EasterEggs(commands.Cog):
@@ -49,15 +44,9 @@ class EasterEggs(commands.Cog):
     async def on_message(self, message):
         if message.author.id == self.bot.user.id:
             return
-        elif REGEX_ESNIPE.match(message.content):
-            await self.bot.get_cog('Sniper').editsnipe(msg=message)
-        elif REGEX_RSNIPE.match(message.content):
-            await self.bot.get_cog('Sniper').reactsnipe(msg=message)
         elif REGEX_HELP.match(message.content):
             if get_prefix(self.bot, message) != DEFAULT_PREFIX:
                 await Help.show_help(self.bot, message)
-        elif REGEX_SNIPE.match(message.content):
-            await self.bot.get_cog('Sniper').snipe(msg=message)
         elif REGEX_SPANK_EMOJI.match(message.content):
             await EasterEggs.handle_spank_command(message, bot=self.bot)
 
